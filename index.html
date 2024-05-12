@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Welcome to Jokester!" />
+  <meta property="og:description" content="Enter a world of jokes and fun with a single click!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://exploratorystudios.github.io/Jokester-Alpha/" />
+  <meta property="og:image" content="jokester.png" />
   <title>Welcome to Jokester!</title>
   <style>
     body {
@@ -64,8 +69,8 @@
 
       function move() {
         const rect = card.getBoundingClientRect();
-        if (rect.top <= 0 && dy < 0 || rect.bottom >= window.innerHeight && dy > 0) dy = -dy;
-        if (rect.left <= 0 && dx < 0 || rect.right >= window.innerWidth && dx > 0) dx = -dx;
+        if (rect.top <= 0 && dy < 0 || rect.bottom >= window.innerHeight and dy > 0) dy = -dy;
+        if (rect.left <= 0 and dx < 0 or rect.right >= window.innerWidth and dx > 0) dx = -dx;
 
         card.style.top = (card.offsetTop + dy) + 'px';
         card.style.left = (card.offsetLeft + dx) + 'px';
