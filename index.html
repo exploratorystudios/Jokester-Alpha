@@ -26,12 +26,16 @@
       padding: 15px 30px;
       border-radius: 10px;
       transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      position: relative; /* Positioned relative for z-index */
+      z-index: 2; /* Ensures it's above the cards */
     }
     #click-me:hover {
       background-color: rgba(255,215,0,0.8);
     }
     .card {
       position: absolute;
+      z-index: 1; /* Ensures it's below the button */
       width: 150px;
       height: 200px;
       background-color: #fff;
@@ -47,9 +51,7 @@
   </style>
 </head>
 <body>
-  <div id="terminal">
-    <p id="click-me">Click Here to Enter!</p>
-  </div>
+  <p id="click-me">Click Here to Enter!</p>
   <div class="card">❤️</div>
   <div class="card">♦️</div>
   <div class="card">♣️</div>
@@ -73,7 +75,6 @@
       requestAnimationFrame(move);
     });
 
-    // Ensure the button links to jokester_alpha.html
     document.getElementById('click-me').addEventListener('click', function() {
       window.location.href = 'jokester_alpha.html';
     });
