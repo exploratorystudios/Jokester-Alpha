@@ -968,7 +968,7 @@ async def handle_jokester(player_hand, discard_pile, players_hands, current_play
             await slow_print("Joker used. Jokester call successful without challenge. Discard pile claimed.")
         elif choice == 's' and has_set_of_four:
             await remove_set_of_four_and_claim(player_hand, set_rank, player_sets, current_player, discard_pile)
-            await slow_print("Set of four declared successfully. Score updated. Discard pile claimed after challenges.")
+            await slow_print("Set of four declared successfully. Discard pile claimed after challenges.")
             challenge_result = await prompt_and_resolve_challenges(player_hand, discard_pile, players_hands, current_player, num_players, 'set', has_set_of_four, player_sets, set_rank, deck_size)
             #await slow_print(f"Set played successfully. New score for Player {current_player + 1}: {player_sets[current_player]} sets.")
         elif choice == 'b':
