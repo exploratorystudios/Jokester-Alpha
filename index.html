@@ -18,6 +18,17 @@
       position: relative;
       overflow: hidden; /* Prevents scrollbars from appearing */
     }
+    #terminal {
+      width: 60vw;
+      height: 40vh;
+      background-color: rgba(0,0,0, 0.3);
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      z-index: 10; /* Ensures it's above the bouncing cards */
+    }
     #click-me {
       font-size: 40px;
       color: gold;
@@ -57,7 +68,6 @@
   <script>
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
-      // Ensure a minimum speed in either direction to maintain diagonal movement
       let dx = Math.random() > 0.5 ? 2 + Math.random() * 3 : -2 - Math.random() * 3;
       let dy = Math.random() > 0.5 ? 2 + Math.random() * 3 : -2 - Math.random() * 3;
 
@@ -72,6 +82,11 @@
         requestAnimationFrame(move);
       }
       requestAnimationFrame(move);
+    });
+
+    // Ensure the button links to jokester_alpha.html
+    document.getElementById('click-me').addEventListener('click', function() {
+      window.location.href = 'jokester_alpha.html';
     });
   </script>
 </body>
