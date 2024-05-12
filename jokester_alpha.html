@@ -43,6 +43,46 @@
       box-sizing: border-box; /* Includes padding and border in the width calculation */
       word-wrap: break-word; /* Ensures text breaks and wraps to prevent overflow */
     }
+    /*Chrome and others*/
+    /* Styling for the scrollbar track (part the thumb travels along) */
+    #output::-webkit-scrollbar-track {
+      background-color: #000; /* Dark background for the track */
+      border-radius: 10px; /* Rounded corners for the track */
+    }
+    
+    /* Styling for the scrollbar thumb (the part that you drag) */
+    #output::-webkit-scrollbar-thumb {
+      background-color: gold; /* Golden color for the thumb */
+      border-radius: 10px; /* Rounded corners for the thumb */
+      border: 2px solid #000; /* Optional: black border for the thumb */
+    }
+    
+    /* Styling for the scrollbar itself (optional: set size) */
+    #output::-webkit-scrollbar {
+      width: 8px; /* Width of the scrollbar */
+      height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
+    }
+    /* For Firefox */
+    #output {
+      scrollbar-width: thin; /* "auto" or "thin" */
+      scrollbar-color: gold #000; /* thumb and track */
+    }
+    
+    /* General styles for WebKit browsers, already provided */
+    #output::-webkit-scrollbar-track {
+      background-color: #000; /* Dark background for the track */
+      border-radius: 10px; /* Rounded corners for the track */
+    }
+    #output::-webkit-scrollbar-thumb {
+      background-color: gold; /* Golden color for the thumb */
+      border-radius: 10px; /* Rounded corners for the thumb */
+      border: 2px solid #000; /* Optional: black border for the thumb */
+    }
+    #output::-webkit-scrollbar {
+      width: 8px; /* Width of the scrollbar */
+      height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
+    }
+
     #input-area {
       display: flex;
       align-items: center;
