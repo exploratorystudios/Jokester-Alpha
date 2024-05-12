@@ -43,45 +43,45 @@
       box-sizing: border-box; /* Includes padding and border in the width calculation */
       word-wrap: break-word; /* Ensures text breaks and wraps to prevent overflow */
     }
-    /*Chrome and others*/
-    /* Styling for the scrollbar track (part the thumb travels along) */
-    #output::-webkit-scrollbar-track {
-      background-color: #000; /* Dark background for the track */
-      border-radius: 10px; /* Rounded corners for the track */
-    }
-    
-    /* Styling for the scrollbar thumb (the part that you drag) */
-    #output::-webkit-scrollbar-thumb {
-      background-color: gold; /* Golden color for the thumb */
-      border-radius: 10px; /* Rounded corners for the thumb */
-      border: 2px solid #000; /* Optional: black border for the thumb */
-    }
-    
-    /* Styling for the scrollbar itself (optional: set size) */
-    #output::-webkit-scrollbar {
-      width: 8px; /* Width of the scrollbar */
-      height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
-    }
-    /* For Firefox */
-    #output {
-      scrollbar-width: thin; /* "auto" or "thin" */
-      scrollbar-color: gold #000; /* thumb and track */
-    }
-    
-    /* General styles for WebKit browsers, already provided */
-    #output::-webkit-scrollbar-track {
-      background-color: #000; /* Dark background for the track */
-      border-radius: 10px; /* Rounded corners for the track */
-    }
-    #output::-webkit-scrollbar-thumb {
-      background-color: gold; /* Golden color for the thumb */
-      border-radius: 10px; /* Rounded corners for the thumb */
-      border: 2px solid #000; /* Optional: black border for the thumb */
-    }
-    #output::-webkit-scrollbar {
-      width: 8px; /* Width of the scrollbar */
-      height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
-    }
+	/*Chrome and others*/
+	/* Styling for the scrollbar track (part the thumb travels along) */
+	#output::-webkit-scrollbar-track {
+	  background-color: #000; /* Dark background for the track */
+	  border-radius: 10px; /* Rounded corners for the track */
+	}
+
+	/* Styling for the scrollbar thumb (the part that you drag) */
+	#output::-webkit-scrollbar-thumb {
+	  background-color: gold; /* Golden color for the thumb */
+	  border-radius: 10px; /* Rounded corners for the thumb */
+	  border: 2px solid #000; /* Optional: black border for the thumb */
+	}
+
+	/* Styling for the scrollbar itself (optional: set size) */
+	#output::-webkit-scrollbar {
+	  width: 8px; /* Width of the scrollbar */
+	  height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
+	}
+	/* For Firefox */
+	#output {
+	  scrollbar-width: thin; /* "auto" or "thin" */
+	  scrollbar-color: gold #000; /* thumb and track */
+	}
+
+	/* General styles for WebKit browsers, already provided */
+	#output::-webkit-scrollbar-track {
+	  background-color: #000; /* Dark background for the track */
+	  border-radius: 10px; /* Rounded corners for the track */
+	}
+	#output::-webkit-scrollbar-thumb {
+	  background-color: gold; /* Golden color for the thumb */
+	  border-radius: 10px; /* Rounded corners for the thumb */
+	  border: 2px solid #000; /* Optional: black border for the thumb */
+	}
+	#output::-webkit-scrollbar {
+	  width: 8px; /* Width of the scrollbar */
+	  height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
+	}
 
     #input-area {
       display: flex;
@@ -126,11 +126,11 @@
     <h2><strong>Game Setup:</strong></h2>
     <ul style="text-align: left; padding-left: 20px;">
         <li><strong>Deck Composition</strong>: Two standard 54-card decks (including Jokers) are used.</li>
-        <li><strong>Players</strong>: The game here currently only supports playing against three AI players, but you can play in person if you like!</li>
+        <li><strong>Players</strong>: 2 to 10 players can participate. The game accommodates both AI and human players.</li>
         <li><strong>Starting Hands</strong>: Players begin with 12 cards if there are 2 players, or 10 cards if more than 2 players are playing.</li>
     </ul>
 
-    <h2><strong>Game Play:</strong></h2>
+    <h2>Game Play:</h2>
     <h3>1. <strong>Shuffling and Dealing</strong>:</h3>
     <p>Begin by shuffling the deck thoroughly and dealing the determined number of cards to each player.</p>
 
@@ -156,10 +156,10 @@
 
     <h3>7. <strong>Jokester Calls</strong>:</h3>
     <p>A "Jokester" declaration allows a player to claim the discard pile using either a set of four, a Joker, or a bluff.<br>
-    Other players can challenge this declaration, and incorrect challenges result in penalties.</p>
+    Other players can challenge this declaration, and incorrect challenges result in discarding two card as a penalty.</p>
 
     <h2><strong>Winning the Game:</strong></h2>
-    <ul style="text-align: left; padding-left: 20px;">
+    <ul>
         <li>The game ends when the deck is exhausted.</li>
         <li>The player with the highest number of sets at the end wins. Collecting four Jokers enables a player to win immediately.</li>
     </ul>
@@ -168,7 +168,7 @@
     <p><strong>Bluffing and Challenges</strong>: Bluffing is an integral part of the game. Players may bluff in their Jokester calls, leading to strategic decisions and challenges from opponents.</p>
 
     <h2><strong>Strategy Tips:</strong></h2>
-    <ul style="text-align: left; padding-left: 20px;">
+    <ul>
         <li>Keep an eye on the discard pile to predict other players' strategies.</li>
         <li>Use Jokers wisely, as they can be game-changing.</li>
         <li>Keep track of which cards have been played to better anticipate the remaining deck composition.</li>
