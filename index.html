@@ -24,13 +24,14 @@
       justify-content: center;
       position: relative;
       overflow: hidden; /* Prevents scrollbars from appearing */
+      flex-direction: column; /* Ensures content is stacked vertically */
     }
     #click-me {
       font-size: 40px;
       color: gold;
       text-shadow: 2px 2px 4px black;
-      border: 3px solid gold;
       padding: 15px 30px;
+      border: 3px solid gold;
       border-radius: 10px;
       transition: all 0.2s ease-in-out;
       cursor: pointer;
@@ -55,9 +56,18 @@
       justify-content: center;
       align-items: center;
     }
+    #title {
+      font-size: 40px;
+      color: black;
+      text-shadow: 2px 2px 4px gold;
+      padding: 10px 20px;
+      margin-bottom: 20px; /* Space between title and button */
+      text-align: center;
+    }
   </style>
 </head>
 <body>
+  <div id="title">Jokester: The Card Game</div>
   <p id="click-me">Click Here to Enter!</p>
   <div class="card">❤️</div>
   <div class="card">♦️</div>
