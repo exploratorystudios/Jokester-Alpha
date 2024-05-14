@@ -97,12 +97,29 @@
     font-size: 24px;
     line-height: 24px;
   }
-  #contact {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 14px;
-  color: #fff;
+  .contact-desktop {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: gold;
+  }
+  .contact-mobile {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    color: gold;
+  }
+  @media (max-width: 768px) {
+    .contact-desktop {
+      display: none;
+    }
+  }
+  @media (min-width: 769px) {
+    .contact-mobile {
+      display: none;
+    }
   }
   /* Chrome mobile-specific styles */
   @media screen and (-webkit-min-device-pixel-ratio:0) and (max-width: 768px) {
@@ -254,7 +271,8 @@
   <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 </head>
 <body>
-<div id="contact">Contact: exploratorystudios91@gmail.com</div>
+<div class="contact-desktop">Contact: exploratorystudios91@gmail.com</div>
+<div class="contact-mobile">Contact: exploratorystudios91@gmail.com</div>
   <div id="terminal">
     <div id="output"></div>
     <div id="input-area">
