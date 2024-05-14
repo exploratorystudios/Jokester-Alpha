@@ -6,7 +6,6 @@
   <title>Jokester: The Card Game</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* Existing CSS styles */
     body {
       background-color: #991111;
       color: #fff;
@@ -15,78 +14,61 @@
       padding: 0;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       overflow: hidden;
     }
     #terminal {
-      width: 80vw;
+      width: 100vw; /* Adjusted to make it wider */
+      max-width: 1500px; /* Adjusted to make it wider */
       height: 80vh;
+      max-height: 90vh;
       background-color: rgba(0,0,0, 0.8);
-      padding: 30px;
+      padding: 20px;
       border-radius: 8px;
       border: 3px double gold;
       box-shadow: 0 0 30px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-sizing: border-box;
     }
     #output {
       color: #ffdd99;
       background-color: rgba(0, 0, 0, 0.5);
-      padding: 15px;
+      padding: 10px;
       margin-bottom: 10px;
-      overflow-y: auto; /* Enables vertical scrolling */
-      width: 100%; /* Full width of the parent container */
-      height: 100%; /* Take the full height of the container */
-      flex-grow: 1; /* Allow to grow to fill available space */
-      box-sizing: border-box; /* Includes padding and border in the width calculation */
-      word-wrap: break-word; /* Ensures text breaks and wraps to prevent overflow */
+      overflow-y: auto;
+      width: 100%;
+      height: 100%;
+      flex-grow: 1;
+      font-size: 1.1em;
+      box-sizing: border-box;
+      word-wrap: break-word;
     }
-	/*Chrome and others*/
-	/* Styling for the scrollbar track (part the thumb travels along) */
-	#output::-webkit-scrollbar-track {
-	  background-color: #000; /* Dark background for the track */
-	  border-radius: 10px; /* Rounded corners for the track */
-	}
-
-	/* Styling for the scrollbar thumb (the part that you drag) */
-	#output::-webkit-scrollbar-thumb {
-	  background-color: gold; /* Golden color for the thumb */
-	  border-radius: 10px; /* Rounded corners for the thumb */
-	  border: 2px solid #000; /* Optional: black border for the thumb */
-	}
-
-	/* Styling for the scrollbar itself (optional: set size) */
-	#output::-webkit-scrollbar {
-	  width: 8px; /* Width of the scrollbar */
-	  height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
-	}
-	/* For Firefox */
-	#output {
-	  scrollbar-width: thin; /* "auto" or "thin" */
-	  scrollbar-color: gold #000; /* thumb and track */
-	}
-
-	/* General styles for WebKit browsers, already provided */
-	#output::-webkit-scrollbar-track {
-	  background-color: #000; /* Dark background for the track */
-	  border-radius: 10px; /* Rounded corners for the track */
-	}
-	#output::-webkit-scrollbar-thumb {
-	  background-color: gold; /* Golden color for the thumb */
-	  border-radius: 10px; /* Rounded corners for the thumb */
-	  border: 2px solid #000; /* Optional: black border for the thumb */
-	}
-	#output::-webkit-scrollbar {
-	  width: 8px; /* Width of the scrollbar */
-	  height: 8px; /* Height of the scrollbar (relevant for horizontal scrollbars) */
-	}
-
+    #output::-webkit-scrollbar-track {
+      background-color: #000;
+      border-radius: 10px;
+    }
+    #output::-webkit-scrollbar-thumb {
+      background-color: gold;
+      border-radius: 10px;
+      border: 2px solid #000;
+    }
+    #output::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    #output {
+      scrollbar-width: thin;
+      scrollbar-color: gold #000;
+    }
     #input-area {
       display: flex;
       align-items: center;
-      margin-top: 10px; /* Add a small margin to separate from output */
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     #user-input {
       width: 100%;
@@ -94,165 +76,410 @@
       color: inherit;
       border: none;
       outline: none;
-      font-size: 1.2em;
-      margin-left: 0; /* Remove margin to place next to the prompt */
+      font-size: 1.1em;
+      margin-left: 0;
     }
     #prompt {
       display: inline-block;
       font-size: 1.5em;
       color: gold;
     }
+	#rulesButton {
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  background-color: gold;
+	  color: black;
+	  border: none;
+	  padding: 10px 20px;
+	  border-radius: 5px;
+	  font-weight: bold;
+	  font-size: 24px;
+	  line-height: 24px;
+	}
+	@media screen and (-webkit-min-device-pixel-ratio:0) and (max-width: 768px) {
+	  #rulesButton {
+		top: 50px; /* Move the rules button further down on Chrome mobile */
+	  }
+	}
+	/* Firefox mobile-specific styles */
+	@-moz-document url-prefix() {
+	  @media screen and (max-width: 768px) {
+		#rulesButton {
+		  top: 5px; /* Move the rules button higher up on Firefox mobile */
+		}
+	  }
+	}
+    #rulesPopup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      overflow: auto;
+    }
+    #rulesContent {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      color: black;
+      text-align: center;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    #rulesContent::-webkit-scrollbar {
+      width: 12px;
+    }
+    #rulesContent::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    #rulesContent::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+    #rulesContent::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    #rulesHeader {
+      text-align: right;
+      position: relative;
+    }
+    #closeButton {
+      background: none;
+      color: black;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    body.mobile #terminal {
+      width: 95vw;
+      height: 90vh;
+    }
+	/* Mobile-specific styles */
+	/* Firefox Mobile-specific styles */
+	@-moz-document url-prefix() {
+	 body.mobile #terminal {
+	   margin-top: 0; /* Reset margin-top for Firefox mobile */
+	 }
+	}
+    body.mobile #output {
+      padding: 5px;
+      font-size: 0.8em;
+    }
+    body.mobile #input-area {
+      flex-direction: row;
+      align-items: center;
+      margin-top: auto;
+    }
+    body.mobile #user-input {
+      font-size: 1em;
+      margin-top: 5px;
+    }
+    body.mobile #rulesButton {
+      font-size: 14px;
+      padding: 5px 10px;
+    }
+    body.mobile #rulesContent {
+      width: 90%;
+      max-height: 80%;
+      padding: 10px;
+    }
+    body.mobile #closeButton {
+      font-size: 16px;
+    }
+    body.mobile h2, body.mobile h3 {
+      font-size: 1.2em;
+    }
+    body.mobile p, body.mobile li {
+      font-size: 1em;
+    }
+    #mobile-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      box-sizing: border-box;
+      justify-content: center;
+    }
+    .mobile-button {
+      background-color: gold;
+      color: black;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin: 3px;
+      cursor: pointer;
+      flex: 1 1 18%;
+      text-align: center;
+    }
+    .send-button {
+      background-color: black;
+      color: gold;
+      border: 2px solid gold;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin: 3px;
+      cursor: pointer;
+      flex: 1 1 40%;
+      text-align: center;
+    }
+    .backspace-button {
+      background-color: black;
+      color: gold;
+      border: 2px solid gold;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 14px;
+      margin: 3px;
+      cursor: pointer;
+      flex: 1 1 40%;
+      text-align: center;
+    }
   </style>
   <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
   <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-
 </head>
 <body>
   <div id="terminal">
     <div id="output"></div>
     <div id="input-area">
       <span id="prompt" class="hearts"> $ </span>
-      <input type="text" id="user-input" placeholder="Enter commands..." onkeydown="handleKeyDown(event)">
-<button id="rulesButton" style="position: absolute; top: 10px; right: 10px; background-color: gold; color: black; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 24px; line-height: 24px;">Rules</button>    </div>
+      <input type="text" id="user-input" placeholder="Enter commands...">
+      <button id="rulesButton">Rules</button>
+    </div>
+    <div id="mobile-buttons"></div> <!-- Move inside the terminal -->
   </div>
 
-<div id="rulesPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border-radius: 10px; color: black; text-align: center; max-height: 80%; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #888 #f1f1f1;">
-    <div style="text-align: right;"><button id="closeButton" style="background: none; border: none; font-size: 20px; cursor: pointer;">&#10006;</button></div>
-    <h2 style="font-size: 38px;">Rules for play:</h2>
-    <h1><strong>Game Overview:</strong></h1>
-    <p>This game is a strategic card game that uses standard playing cards, including Jokers. The main objective is to collect sets of four cards and strategically utilize Jokers, which can instantly represent a set of four.</p>
-    
-    <h2><strong>Game Setup:</strong></h2>
-    <ul style="text-align: left; padding-left: 20px;">
+  <div id="rulesPopup">
+    <div id="rulesContent">
+      <div id="rulesHeader">
+        <button id="closeButton">&#10006;</button>
+      </div>
+      <h2>Rules for play:</h2>
+      <h1><strong>Game Overview:</strong></h1>
+      <p>This game is a strategic card game that uses standard playing cards, including Jokers. The main objective is to collect sets of four cards and strategically utilize Jokers, which can instantly represent a set of four.</p>
+      <h2><strong>Game Setup:</strong></h2>
+      <ul>
         <li><strong>Deck Composition</strong>: Two standard 54-card decks (including Jokers) are used.</li>
         <li><strong>Players</strong>: 2 to 10 players can participate. The game accommodates both AI and human players.</li>
         <li><strong>Starting Hands</strong>: Players begin with 12 cards if there are 2 players, or 10 cards if more than 2 players are playing.</li>
-    </ul>
-
-    <h2>Game Play:</h2>
-    <h3>1. <strong>Shuffling and Dealing</strong>:</h3>
-    <p>Begin by shuffling the deck thoroughly and dealing the determined number of cards to each player.</p>
-
-    <h3>2. <strong>Turns</strong>:</h3>
-    <p>Players take turns in a clockwise direction.<br>
-    Each turn consists of a drawing phase, a playing phase, and a discarding phase.</p>
-
-    <h3>3. <strong>Drawing Cards</strong>:</h3>
-    <p>Players may draw two cards from the deck or one card from the discard pile on their turn.<br>
-    Opting for cards from the discard pile is a strategic move that can reveal what a player might be trying to collect.</p>
-
-    <h3>4. <strong>Playing Sets</strong>:</h3>
-    <p>A set consists of four cards of the same rank.<br>
-    Jokers are powerful, acting as a complete set on their own (equivalent to four identical cards).<br>
-    Players announce sets to accumulate points.</p>
-
-    <h3>5. <strong>Discarding</strong>:</h3>
-    <p>If unable to play a set, players must discard a card to the central discard pile, which is visible to all players.</p>
-
-    <h3>6. <strong>Jokers as Instant Sets</strong>:</h3>
-    <p>Jokers can be declared as an instant set, dramatically influencing the state of the game.<br>
-    They can also be used to claim the discard pile, providing a significant strategic advantage.</p>
-
-    <h3>7. <strong>Jokester Calls</strong>:</h3>
-    <p>A "Jokester" declaration allows a player to claim the discard pile using either a set of four, a Joker, or a bluff.<br>
-    Other players can challenge this declaration, and incorrect challenges result in discarding two card as a penalty.</p>
-
-    <h2><strong>Winning the Game:</strong></h2>
-    <ul>
+      </ul>
+      <h2>Game Play:</h2>
+      <h3>1. <strong>Shuffling and Dealing</strong>:</h3>
+      <p>Begin by shuffling the deck thoroughly and dealing the determined number of cards to each player.</p>
+      <h3>2. <strong>Turns</strong>:</h3>
+      <p>Players take turns in a clockwise direction. Each turn consists of a drawing phase, a playing phase, and a discarding phase.</p>
+      <h3>3. <strong>Drawing Cards</strong>:</h3>
+      <p>Players may draw two cards from the deck or one card from the discard pile on their turn. Opting for cards from the discard pile is a strategic move that can reveal what a player might be trying to collect.</p>
+      <h3>4. <strong>Playing Sets</strong>:</h3>
+      <p>A set consists of four cards of the same rank. Jokers are powerful, acting as a complete set on their own (equivalent to four identical cards). Players announce sets to accumulate points.</p>
+      <h3>5. <strong>Discarding</strong>:</h3>
+      <p>If unable to play a set, players must discard a card to the central discard pile, which is visible to all players.</p>
+      <h3>6. <strong>Jokers as Instant Sets</strong>:</h3>
+      <p>Jokers can be declared as an instant set, dramatically influencing the state of the game. They can also be used to claim the discard pile, providing a significant strategic advantage.</p>
+      <h3>7. <strong>Jokester Calls</strong>:</h3>
+      <p>A "Jokester" declaration allows a player to claim the discard pile using either a set of four, a Joker, or a bluff. Other players can challenge this declaration, and incorrect challenges result in discarding two card as a penalty.</p>
+      <h2><strong>Winning the Game:</strong></h2>
+      <ul>
         <li>The game ends when the deck is exhausted.</li>
         <li>The player with the highest number of sets at the end wins. Collecting four Jokers enables a player to win immediately.</li>
-    </ul>
-
-    <h2><strong>Special Rules:</strong></h2>
-    <p><strong>Bluffing and Challenges</strong>: Bluffing is an integral part of the game. Players may bluff in their Jokester calls, leading to strategic decisions and challenges from opponents.</p>
-
-    <h2><strong>Strategy Tips:</strong></h2>
-    <ul>
+      </ul>
+      <h2><strong>Special Rules:</strong></h2>
+      <p><strong>Bluffing and Challenges</strong>: Bluffing is an integral part of the game. Players may bluff in their Jokester calls, leading to strategic decisions and challenges from opponents.</p>
+      <h2><strong>Strategy Tips:</strong></h2>
+      <ul>
         <li>Keep an eye on the discard pile to predict other players' strategies.</li>
         <li>Use Jokers wisely, as they can be game-changing.</li>
         <li>Keep track of which cards have been played to better anticipate the remaining deck composition.</li>
-    </ul>
+      </ul>
+    </div>
   </div>
-</div>
 
-<script>
-const rulesButton = document.getElementById('rulesButton');
-const rulesPopup = document.getElementById('rulesPopup');
-const closeButton = document.getElementById('closeButton');
+  <script>
+    const rulesButton = document.getElementById('rulesButton');
+    const rulesPopup = document.getElementById('rulesPopup');
+    const closeButton = document.getElementById('closeButton');
+    const userInput = document.getElementById('user-input');
+    const outputDiv = document.getElementById('output');
+    const prompt = document.getElementById('prompt');
+    const mobileButtons = document.getElementById('mobile-buttons');
+    const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
+    let currentSuit = 0;
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    let isJokesterMode = false; // Track the state of the buttons
 
-rulesButton.addEventListener('click', () => {
-  rulesPopup.style.display = 'block';
-});
+    rulesButton.addEventListener('click', () => {
+      rulesPopup.style.display = 'block';
+    });
 
-closeButton.addEventListener('click', () => {
-  rulesPopup.style.display = 'none';
-});
-</script>
+    closeButton.addEventListener('click', () => {
+      rulesPopup.style.display = 'none';
+    });
 
-<script>
-const userInput = document.getElementById('user-input');
-const outputDiv = document.getElementById('output');
-const prompt = document.getElementById('prompt');
-const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
-let currentSuit = 0;
-
-document.getElementById("rulesButton").addEventListener("click", function() {
-  document.getElementById("rulesPopup").style.display = "block";
-});
-
-document.getElementById("closeButton").addEventListener("click", function() {
-  document.getElementById("rulesPopup").style.display = "none";
-});
-
-function handleKeyDown(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();  // Prevent form submission
-    const commandText = userInput.value.trim();  // Trim whitespace from input
-    if (!commandText) {
-      return; // Exit if the command is empty
+    function handleKeyDown(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const commandText = userInput.value.trim();
+        if (!commandText) return;
+        userInput.disabled = true;
+        const lastDiv = outputDiv.lastElementChild;
+        if (lastDiv) {
+          lastDiv.innerHTML += '&gt; ' + commandText + '<br>';
+        } else {
+          const newDiv = document.createElement('div');
+          newDiv.innerHTML = '&gt; ' + commandText + '<br>';
+          outputDiv.appendChild(newDiv);
+        }
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+        document.dispatchEvent(new CustomEvent('input-received', { detail: commandText }));
+        userInput.value = '';
+        userInput.disabled = false;
+        if (isMobile) {
+          userInput.blur();  // Ensure the input field loses focus to prevent keyboard from appearing
+        } else {
+          userInput.focus(); // Refocus on desktop for continued typing
+        }
+      }
     }
-    userInput.disabled = true;  // Disable input during processing
-    
-    // Retrieve the last div in the output container
-    const lastDiv = outputDiv.lastElementChild;
-    // Append the user command directly to the last div, prefixed by '> '
-    if (lastDiv) {
-      lastDiv.innerHTML += '&gt; ' + commandText + '<br>';
-    } else {
-      // Fallback in case there are no divs yet
+
+    function addTextToInput(text) {
+      userInput.value += text;
+    }
+
+    function removeLastCharacterFromInput() {
+      userInput.value = userInput.value.slice(0, -1);
+    }
+
+    userInput.addEventListener('keydown', handleKeyDown);
+
+    // Ensure input field can be focused again on desktop
+    userInput.addEventListener('blur', () => {
+      if (!isMobile) {
+        userInput.focus();
+      }
+    });
+
+    function instaPrint(message) {
       const newDiv = document.createElement('div');
-      newDiv.innerHTML = '&gt; ' + commandText + '<br>';
+      newDiv.innerHTML = `<br>${message}`;
       outputDiv.appendChild(newDiv);
+      outputDiv.scrollTop = outputDiv.scrollHeight;
     }
 
-    // Scroll output to the bottom
-    outputDiv.scrollTop = outputDiv.scrollHeight;
+    setInterval(() => {
+      prompt.className = suits[currentSuit];
+      currentSuit = (currentSuit + 1) % suits.length;
+    }, 1000);
 
-    document.dispatchEvent(new CustomEvent('input-received', { detail: commandText }));
-    userInput.value = '';  // Clear input field after sending the command
-  }
-}
+    if (isMobile) {
+      document.body.classList.add('mobile');
+      showInitialButtons();
+    } else {
+      mobileButtons.style.display = 'none';  // Hide buttons on desktop
+    }
 
-userInput.addEventListener('keydown', handleKeyDown);
+    function showMobileButtons(buttons) {
+      if (!isMobile) return; // Ensure buttons only show on mobile
+      mobileButtons.innerHTML = '';
+      buttons.forEach(button => {
+        const btn = document.createElement('button');
+        btn.classList.add('mobile-button');
+        btn.innerText = button.label;
+        btn.onclick = () => {
+          addTextToInput(button.value);
+          // Remove auto-send on click
+        };
+        mobileButtons.appendChild(btn);
+      });
+      const backspaceButton = document.createElement('button');
+      backspaceButton.classList.add('backspace-button');
+      backspaceButton.innerText = 'Backspace';
+      backspaceButton.onclick = () => {
+        removeLastCharacterFromInput();
+      };
+      mobileButtons.appendChild(backspaceButton);
+      const sendButton = document.createElement('button');
+      sendButton.classList.add('send-button');
+      sendButton.innerText = 'Send';
+      sendButton.onclick = () => {
+        userInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      };
+      mobileButtons.appendChild(sendButton);
+      mobileButtons.style.display = 'flex';
+    }
 
-function instaPrint(message) {
-    const outputDiv = document.getElementById('output'); // Assume 'output' is the ID of your output container
-    const newDiv = document.createElement('div');
-    newDiv.innerHTML = `<br>${message}`; // Add a line break before the message
-    outputDiv.appendChild(newDiv);
-    outputDiv.scrollTop = outputDiv.scrollHeight; // Scroll to the bottom of the output container
-}
+    function showInitialButtons() {
+      showMobileButtons([{ label: 'AI', value: 'AI' }]);
+      userInput.disabled = true; // Disable input initially until button is clicked
+      userInput.style.pointerEvents = 'none'; // Disable pointer events to prevent focus issues
+    }
 
-setInterval(() => {
-  prompt.className = suits[currentSuit];
-  currentSuit = (currentSuit + 1) % suits.length;
-}, 1000); // Change suit every 1 second
-</script>
+    function showNumberButtons() {
+      showMobileButtons([
+        { label: '1', value: '1' }, { label: '2', value: '2' }, { label: '3', value: '3' },
+        { label: '4', value: '4' }, { label: '5', value: '5' }, { label: '6', value: '6' },
+        { label: '7', value: '7' }, { label: '8', value: '8' }, { label: '9', value: '9' },
+        { label: '0', value: '0' }
+      ]);
+      isJokesterMode = false; // Set state to numbers
+    }
 
-<py-script>
+    function showJokesterButtons() {
+      showMobileButtons([
+        { label: 'J', value: 'J' }, { label: 'S', value: 'S' }, { label: 'B', value: 'B' }
+      ]);
+      isJokesterMode = true; // Set state to Jokester
+    }
+
+    function showChallengeButtons() {
+      showMobileButtons([
+        { label: 'Y', value: 'Y' }, { label: 'N', value: 'N' }
+      ]);
+    }
+
+    document.addEventListener('input-received', (event) => {
+      const input = event.detail.toLowerCase(); // Ensure correct method name
+      if (isMobile) {
+        if (input === 'ai') {
+          showNumberButtons();
+          userInput.disabled = false; // Enable input after button click
+          userInput.style.pointerEvents = 'auto'; // Re-enable pointer events
+        } else if (input === 'jokester') {
+          showJokesterButtons();
+        } else if (input === 'do you want to challenge the jokester call? (y/n): ') {
+          showChallengeButtons();
+        } else if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(input) && isJokesterMode) {
+          // Switch back to number buttons after Jokester input
+          showNumberButtons();
+        } else if (['j', 's', 'b'].includes(input)) {
+          showNumberButtons();
+        }
+      }
+      if (!isMobile) {
+        userInput.disabled = false; // Ensure input is enabled on desktop
+        userInput.style.pointerEvents = 'auto'; // Ensure pointer events are enabled
+        userInput.focus(); // Refocus on desktop after receiving input
+      }
+    });
+  </script>
+
+<py-script>	
+import random
+import time
+import sys
 from js import document, window
 import asyncio
+import re
 from pyodide import create_proxy
 
 output_div = document.getElementById('output')
@@ -293,9 +520,26 @@ async def fast_print(message):
 async def slow_input(prompt):
     await fast_print(prompt)
     user_input.disabled = False
-    user_input.focus()
+
+    # Check if the device is mobile
+    is_mobile = 'Mobi' in window.navigator.userAgent or 'Android' in window.navigator.userAgent
+
+    if is_mobile:
+        if prompt == ("Enter 'AI' to play against AI: "):
+            window.showInitialButtons()
+        elif prompt.lower() == ("your choice (j/s/b): "):
+            window.showJokesterButtons()
+        elif prompt == ("Player 1, do you want to challenge the Jokester call? (y/n): "):
+            window.showChallengeButtons()
+        elif prompt == ("Do you want to start a new game? (y/n): "):
+            window.showChallengeButtons()
+        else:
+            window.showNumberButtons()
+    else:
+        user_input.focus()
 
     promise = asyncio.Future()
+
     def on_input(event):
         command = event.detail
         promise.set_result(command)
@@ -306,25 +550,21 @@ async def slow_input(prompt):
     document.removeEventListener('input-received', input_handler)
     input_handler.destroy()
     user_input.disabled = True
+
     return result.strip().lower()
 
 async def safe_int_input(prompt, min_val, max_val):
     while True:
         try:
-            # Display prompt and receive input
             input_str = await slow_input(prompt)
-            # Convert input to an integer
             selected = int(input_str)
-            # Check if the input is within the valid range
             if min_val <= selected <= max_val:
-                return selected - 1  # Subtract 1 to convert to zero-indexed
+                return selected - 1  # Convert to zero-indexed
             else:
                 await fast_print(f"Please enter a number between {min_val} and {max_val}.")
         except ValueError:
-            # Handle non-integer inputs
             await fast_print("Invalid input. Please enter a valid number.")
-
-
+	
 async def main():
     global bluffing_history, joker_possession
     bluffing_history = {i: {'bluffs': 0, 'total_calls': 0} for i in range(4)}  # Default to max 4 if AI not chosen
@@ -377,10 +617,6 @@ async def main():
             break
         else:
             await fast_print("Invalid input. Please enter 'y' to play again or 'n' to exit.")
-
-import random
-import time
-import sys
 
 # Define card decks
 SUITS = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
@@ -866,7 +1102,7 @@ async def try_play_set(player_hand, current_player):
             # Play a complete set of four
             for _ in range(4):
                 player_hand.remove(cards.pop(0))
-            await slow_print(f"Player {current_player + 1} plays a set of {rank}.")
+            await slow_print(f"Player {current_player + 1} plays a set of {rank}s.")
             return True
 
     # Check and play a Joker as a complete set if it exists and no other sets were played
@@ -1155,7 +1391,7 @@ async def prompt_for_discard(player_hand, num_cards):
     return chosen_cards
 
 main()
-</py-script>
+  </py-script>
 
 </body>
 </html>
