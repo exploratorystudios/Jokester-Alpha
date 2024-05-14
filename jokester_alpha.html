@@ -121,6 +121,15 @@
       display: none;
     }
   }
+  /* Firefox Mobile-specific styles */
+  @-moz-document url-prefix() {
+    @media (max-width: 768px) {
+      .contact-mobile {
+        top: 5px; /* Adjust if needed for Firefox on mobile */
+        left: 5px; /* Adjust if needed for Firefox on mobile */
+      }
+    }
+  }
   /* Chrome mobile-specific styles */
   @media screen and (-webkit-min-device-pixel-ratio:0) and (max-width: 768px) {
     #rulesButton {
